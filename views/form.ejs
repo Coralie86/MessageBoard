@@ -1,8 +1,9 @@
 <form method="POST" action="/new">
    <h1>Form for new Message</h1>
+   <%- include("errors.ejs") %>
    <div class="inputs">
-        <input name="nameUser" type="text" placeholder="Your Name">
-        <input name="messageText" type="text" placeholder="Your message">
+        <input name="nameUser" type="text" placeholder="Your Name" required>
+        <input name="messageText" type="text" placeholder="Your message" required>
    </div>
    <button type="Submit">Submit</button>
 </form>

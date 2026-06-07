@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("node:path");
 const app = express();
 
+const messageRouter = require('./routes/messageRouter');
+
 // View set up
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -12,40 +14,22 @@ app.use(express.static(assetsPath));
 
 app.use(express.urlencoded({ extended: true }));
 
-const messages = [
-  {
-    id: 0,
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date().toLocaleString()
-  },
-  {
-    id: 1,
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date().toLocaleString()
-  }
-];
+// const messages = [
+//   {
+//     id: 0,
+//     text: "Hi there!",
+//     user: "Amando",
+//     added: new Date().toLocaleString()
+//   },
+//   {
+//     id: 1,
+//     text: "Hello World!",
+//     user: "Charles",
+//     added: new Date().toLocaleString()
+//   }
+// ];
 
-app.get("/", (req, res) =>{
-    res.render("index", {messages: messages});
-});
-
-app.get('/new', (req, res) => {
-    res.render('form')
-})
-
-app.post('/new', (req,res) => {
-    const arrLength = parseInt(messages.length);
-    messages.push({id: arrLength, text: req.body.messageText, user: req.body.nameUser, added: new Date().toLocaleString()})
-    res.redirect('/');
-})
-
-app.get('/:messageId', (req, res) => {
-    const id = parseInt(req.params.messageId);
-    res.render('detail', {message: messages.find( message => message.id === id)})
-})
-
+app.use("/", messageRouter);
 
 
 const PORT = 3000;
